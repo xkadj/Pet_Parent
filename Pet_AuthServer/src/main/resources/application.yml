@@ -1,0 +1,7 @@
+server:
+  port: 9091
+spring:
+  profiles:
+    active: dev #多环境配置
+  application:
+    name: authserver  #项目名 服务名
