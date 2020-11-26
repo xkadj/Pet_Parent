@@ -11,6 +11,7 @@ public class test {
 
     @GetMapping("/test.do")
     public R test(){
+        System.out.println("test");
         return R.ok();
     }
 }
