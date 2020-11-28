@@ -1,5 +1,6 @@
 package com.lcq.pet.common.util;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -35,5 +36,9 @@ public class DateUtil {
             case 3:calendar.add(Calendar.DAY_OF_MONTH,add);break;
         }
         return calendar.getTime();
+    }
+
+    public static String getTime(){
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
     }
 }

@@ -8,5 +8,6 @@ package com.lcq.pet.common.config;
  */
 public class SystemConfig {
     //密码的密钥
-    public static final String PASS_KEY="KWGIHtSFPmG9PR9SL1eSWA==";
+    public static final String PASS_KEY="VSgsfX+NAN3kpQFvrpkXNw==";
+
 }

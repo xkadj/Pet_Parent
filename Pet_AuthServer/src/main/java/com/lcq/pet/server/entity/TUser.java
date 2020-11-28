@@ -2,7 +2,6 @@ package com.lcq.pet.server.entity;
 
 import lombok.Data;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @description: 码起 自动生成代码

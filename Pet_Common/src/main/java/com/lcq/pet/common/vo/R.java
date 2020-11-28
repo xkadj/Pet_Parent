@@ -24,7 +24,6 @@ public class R {
         this.data = data;
     }
 
-
     public static R ok(){
         return new R(SystemCodeConfig.OK,"OK",null);
     }

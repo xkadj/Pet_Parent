@@ -1,14 +1,11 @@
 package com.lcq.pet.server.dao;
 
+import com.lcq.pet.common.dto.UserDto;
 import com.lcq.pet.server.entity.TUser;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
 
 /**
  * @description: 码起 自动生成代码
@@ -17,14 +14,34 @@ import java.util.List;
  */
 @Repository
 public interface TUserDao {
+
     /*新增*/
     @Insert("insert into t_user (u_name,u_password,u_sex,u_phone,u_email,u_flag,u_img,u_addr,u_sign) values(#{u_name},#{u_password},#{u_sex},#{u_phone},#{u_email},#{u_flag},#{u_img},#{u_addr},#{u_sign})")
     int insert(TUser tUser);
 
+
     /*删除*/
     @Delete("delete from t_user where u_id=#{id}")
     int deleteById(int id);
+
+
     /*查询全部*/
     @Select("select * from t_user")
     List<TUser> all();
+
+
+    //检验手机号
+    @Select("select * from t_user where u_phone=#{phone}")
+    TUser selectByPhone(String phone);
+
+
+    //找回密码
+    @Update("update t_user set u_password=#{u_password} where u_phone=#{u_phone}")
+    int update(UserDto dto);
+
+
+    //注册
+    @Insert("insert into t_user (u_phone,u_password,u_flag) values(#{u_phone},#{u_password},1)")
+    @Options(useGeneratedKeys = true,keyProperty = "u_id")//标记获取自增主键的值
+    int insertId(TUser tUser);
 }

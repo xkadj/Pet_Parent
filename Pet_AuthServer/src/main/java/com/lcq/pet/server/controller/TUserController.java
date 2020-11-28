@@ -1,5 +1,6 @@
 package com.lcq.pet.server.controller;
 
+import com.lcq.pet.common.dto.UserDto;
 import com.lcq.pet.common.vo.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,18 +17,43 @@ public class TUserController {
     @Autowired
     private TUserService tUserService;
     //新增
-    @PostMapping("/add.do")
-    public R save(@RequestBody TUser tUser){
-        return tUserService.save(tUser);
-    }
+//    @PostMapping("/add.do")
+//    public R save(@RequestBody TUser tUser){
+//        return tUserService.save(tUser);
+//    }
     //删除
     @DeleteMapping("/del.do")
     public R del(int id){
         return tUserService.delById(id);
     }
-    //查询
-    @GetMapping("/all.do")
-    public R all(){
-        return tUserService.all();
+//    //查询
+//    @GetMapping("/all.do")
+//    public R all(){
+//        return tUserService.all();
+//    }
+
+    //注册
+    @PostMapping("/register.do")
+    public R register(@RequestBody UserDto dto){
+        return tUserService.registerV2(dto);
     }
+
+    //登陆
+    @PostMapping("/login.do")
+    public R login(@RequestBody UserDto dto){
+        return tUserService.loginV2(dto);
+    }
+
+    //校验
+    @GetMapping("/checkphone.do")
+    public R check(String phone){
+        return tUserService.checkPhone(phone);
+    }
+
+    //密码找回
+    @PostMapping("/findpass.do")
+    public R finaPass(@RequestBody UserDto dto){
+        return tUserService.findPass(dto);
+    }
+
 }
