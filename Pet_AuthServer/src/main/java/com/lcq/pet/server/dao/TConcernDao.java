@@ -27,4 +27,7 @@ public interface TConcernDao {
     /*查询全部*/
     @Select("select * from t_concern")
     List<TConcern> all();
+
+    @Select("select count(*) from t_concern where u_id_from=#{userId} or (u_id_to = #{userId} and c_flag = 1);")
+    int getConcernNumByUserId(int userId);
 }

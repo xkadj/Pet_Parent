@@ -30,4 +30,13 @@ public class TApprController {
     public R all(){
         return tApprService.all();
     }
+
+    //根据用户的id查询该用户点赞的总数量
+    @GetMapping("/getConcernNumByUserId.do")
+    public int getConcernNumByUserId(int userId){
+        if (userId != 0){
+            return tApprService.getApprNumByUserId(userId);
+        }
+        return  0;
+    }
 }

@@ -1,11 +1,14 @@
 package com.lcq.pet.server.service.impl;
 
 import com.lcq.pet.common.vo.R;
+import com.lcq.pet.server.entity.TNote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.lcq.pet.server.entity.TFavo;
 import com.lcq.pet.server.dao.TFavoDao;
 import com.lcq.pet.server.service.intf.TFavoService;
+
+import java.util.List;
 
 /**
  * @description: 码起 自动生成代码
@@ -37,5 +40,15 @@ public class TFavoServiceImpl implements TFavoService{
     @Override
     public R all(){
        return R.ok(tFavoDao.all());
+    }
+
+    @Override
+    public int getFavoNumByUserId(int userId) {
+        return tFavoDao.getFavoNumByUserId(userId);
+    }
+
+    @Override
+    public List<TNote> queryAllFavoByUserId(int userId) {
+        return tFavoDao.queryAllFavoByUserId(userId);
     }
 }

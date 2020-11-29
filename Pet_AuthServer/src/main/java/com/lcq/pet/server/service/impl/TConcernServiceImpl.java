@@ -38,4 +38,14 @@ public class TConcernServiceImpl implements TConcernService{
     public R all(){
        return R.ok(tConcernDao.all());
     }
+
+    @Override
+    public R concern(TConcern concern) {
+        return tConcernDao.insert(concern) > 0 ? R.ok() : R.fail("关注失败！");
+    }
+
+    @Override
+    public int getConcernNumByUserId(int userId) {
+        return tConcernDao.getConcernNumByUserId(userId);
+    }
 }
