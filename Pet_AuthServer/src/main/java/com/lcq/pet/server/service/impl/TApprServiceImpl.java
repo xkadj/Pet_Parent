@@ -38,4 +38,9 @@ public class TApprServiceImpl implements TApprService{
     public R all(){
        return R.ok(tApprDao.all());
     }
+
+    @Override
+    public int getApprNumByUserId(int userId) {
+        return tApprDao.getApprNumByUserId(userId);
+    }
 }

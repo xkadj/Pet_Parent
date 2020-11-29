@@ -15,4 +15,13 @@ public interface TConcernService {
     R delById(int id);
     /*查询全部*/
     R all();
+
+
+    //关注
+    R concern(TConcern concern);
+
+    //根据用户id查询该用户关注人数
+    int getConcernNumByUserId(int userId);
+
+
 }

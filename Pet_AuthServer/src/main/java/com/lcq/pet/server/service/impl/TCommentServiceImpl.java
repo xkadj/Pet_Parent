@@ -7,6 +7,8 @@ import com.lcq.pet.server.entity.TComment;
 import com.lcq.pet.server.dao.TCommentDao;
 import com.lcq.pet.server.service.intf.TCommentService;
 
+import java.util.List;
+
 /**
  * @description: 码起 自动生成代码
  * @author: zkh
@@ -37,5 +39,20 @@ public class TCommentServiceImpl implements TCommentService{
     @Override
     public R all(){
        return R.ok(tCommentDao.all());
+    }
+
+    @Override
+    public R comment(TComment tComment) {
+        return tCommentDao.comment(tComment) > 0 ?  R.ok() : R.fail("评论失败");
+    }
+
+    @Override
+    public List<TComment> queryCommentToNoteByNoteId(int noteId) {
+        return tCommentDao.queryCommentToNoteByNoteId(noteId);
+    }
+
+    @Override
+    public List<TComment> queryCommentToCommentByCommentId(int cid) {
+        return tCommentDao.queryCommentToCommentByCommentId(cid);
     }
 }

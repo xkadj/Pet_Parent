@@ -1,6 +1,7 @@
 package com.lcq.pet.server.dao;
 
 import com.lcq.pet.server.entity.TFavo;
+import com.lcq.pet.server.entity.TNote;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -27,4 +28,14 @@ public interface TFavoDao {
     /*查询全部*/
     @Select("select * from t_favo")
     List<TFavo> all();
+
+    //根据用户id查询该用户收藏数量
+    @Select("select count(*) from t_favo where f_userid = #{userId}")
+    int getFavoNumByUserId(int userId);
+
+    //根据用户id查询该用户收藏列表
+    @Select("select n.* from t_favo f,t_note n where f.f_noteid = n.n_id and f.f_userid = #{userId} ")
+    List<TNote> queryAllFavoByUserId(int userId);
+
+
 }

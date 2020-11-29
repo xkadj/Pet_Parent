@@ -7,6 +7,8 @@ import com.lcq.pet.server.entity.TNote;
 import com.lcq.pet.server.dao.TNoteDao;
 import com.lcq.pet.server.service.intf.TNoteService;
 
+import java.util.List;
+
 /**
  * @description: 码起 自动生成代码
  * @author: zkh
@@ -37,5 +39,15 @@ public class TNoteServiceImpl implements TNoteService{
     @Override
     public R all(){
        return R.ok(tNoteDao.all());
+    }
+
+    @Override
+    public int publishNote(TNote tNote) {
+        return tNoteDao.publishNote(tNote);
+    }
+
+    @Override
+    public List<TNote> queryAllNotes() {
+        return tNoteDao.queryAllNotes();
     }
 }

@@ -13,7 +13,7 @@ import java.util.Date;
 public class TComment implements Serializable {
     private Integer c_id;
     private String c_content;
-    private Date c_time;
+    private String  c_time;
     private Integer c_userid;
     private Integer c_to_cid;
     private Integer c_to_nid;

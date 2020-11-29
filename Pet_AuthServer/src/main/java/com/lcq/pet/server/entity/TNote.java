@@ -14,5 +14,5 @@ public class TNote implements Serializable {
     private Integer n_id;
     private String n_content;
     private Integer n_kind;
-    private Date n_time;
+    private String n_time;
 }

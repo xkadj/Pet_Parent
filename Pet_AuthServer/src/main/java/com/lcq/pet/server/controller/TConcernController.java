@@ -30,4 +30,21 @@ public class TConcernController {
     public R all(){
         return tConcernService.all();
     }
+
+
+    @PostMapping("/concern.do")
+    public R concern(TConcern concern){
+        if (concern != null){
+            return tConcernService.concern(concern);
+        }
+        return  R.fail("关注失败！");
+    }
+
+    @GetMapping("/getConcernNumByUserId.do")
+    public int getConcernNumByUserId(int userId){
+        if (userId != 0){
+            return tConcernService.getConcernNumByUserId(userId);
+        }
+        return 0;
+    }
 }

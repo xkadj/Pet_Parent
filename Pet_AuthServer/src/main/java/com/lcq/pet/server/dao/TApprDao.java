@@ -27,4 +27,8 @@ public interface TApprDao {
     /*查询全部*/
     @Select("select * from t_appr")
     List<TAppr> all();
+
+    //根据用户id查询点赞的总数量
+    @Select("select count(*) from t_appr where u_id_from = #{userId}")
+    int getApprNumByUserId(int userId);
 }
