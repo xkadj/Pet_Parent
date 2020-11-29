@@ -11,17 +11,17 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * @program: Boot2003
+ * @program:
  * @description:
- * @author: Feri(邢朋辉)
- * @create: 2020-09-09 11:38
+ * @author:
+ * @create:
  */
 @Configuration //标记这是一个配置
 @EnableSwagger2 //启用Swagger
 public class SwaggerConfig {
 
     private ApiInfo createAI(){
-        return new ApiInfoBuilder().title("Health项目的App接口文档").//设置标题
+        return new ApiInfoBuilder().title("Pet项目的App接口文档").//设置标题
                 contact(new Contact("Java2005","http://baidu.com","java2003@163.com"))
                 .version("1.0").description("这是一个在线接口文档，可以直接查看接口的信息并且可以实现接口的测试")
                 .build();

@@ -1,6 +1,8 @@
 package com.lcq.pet.server.dao;
 
-import com.lcq.pet.common.dto.UserDto;
+import com.lcq.pet.common.dto.UserDetialDto;
+import com.lcq.pet.common.dto.UserFindPass;
+import com.lcq.pet.common.dto.UserUpdatePassDto;
 import com.lcq.pet.server.entity.TUser;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -34,14 +36,20 @@ public interface TUserDao {
     @Select("select * from t_user where u_phone=#{phone}")
     TUser selectByPhone(String phone);
 
+    //修改密码
+    @Update("update t_user set u_password=#{u_newpassword} where u_phone=#{u_phone}")
+    int changePass(UserUpdatePassDto dto);
 
     //找回密码
     @Update("update t_user set u_password=#{u_password} where u_phone=#{u_phone}")
-    int update(UserDto dto);
-
+    int updatePass(UserFindPass dto);
 
     //注册
     @Insert("insert into t_user (u_phone,u_password,u_flag) values(#{u_phone},#{u_password},1)")
     @Options(useGeneratedKeys = true,keyProperty = "u_id")//标记获取自增主键的值
     int insertId(TUser tUser);
+
+    //修改个人信息
+    @Update("update t_user set u_name=#{u_name}, u_sex=#{u_sex}, u_email=#{u_email}, u_img=#{u_img},u_addr=#{u_addr},u_sign=#{u_sign}  where u_phone=#{u_phone}")
+    int updateDetail(UserDetialDto dto);
 }
