@@ -1,7 +1,10 @@
 package com.lcq.pet.server.service.intf;
 
 import com.lcq.pet.common.vo.R;
+import com.lcq.pet.server.entity.TNote;
 import com.lcq.pet.server.entity.TUserNote;
+
+import java.util.List;
 
 /**
  * @description: 码起 自动生成代码
@@ -15,4 +18,8 @@ public interface TUserNoteService {
     R delById(int id);
     /*查询全部*/
     R all();
+
+
+    //根据用户id查询该用户的所有笔记
+    List<TNote> queryAllNotsByUserId(int userId);
 }

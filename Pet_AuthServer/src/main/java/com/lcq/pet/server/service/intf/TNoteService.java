@@ -2,6 +2,7 @@ package com.lcq.pet.server.service.intf;
 
 import com.lcq.pet.common.vo.R;
 import com.lcq.pet.server.entity.TNote;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -23,5 +24,7 @@ public interface TNoteService {
 
     //查询所有笔记
     List<TNote> queryAllNotes();
+
+
 
 }

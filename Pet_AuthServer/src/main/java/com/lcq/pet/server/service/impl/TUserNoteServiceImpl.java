@@ -1,11 +1,14 @@
 package com.lcq.pet.server.service.impl;
 
 import com.lcq.pet.common.vo.R;
+import com.lcq.pet.server.entity.TNote;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.lcq.pet.server.entity.TUserNote;
 import com.lcq.pet.server.dao.TUserNoteDao;
 import com.lcq.pet.server.service.intf.TUserNoteService;
+
+import java.util.List;
 
 /**
  * @description: 码起 自动生成代码
@@ -37,5 +40,10 @@ public class TUserNoteServiceImpl implements TUserNoteService{
     @Override
     public R all(){
        return R.ok(tUserNoteDao.all());
+    }
+
+    @Override
+    public List<TNote> queryAllNotsByUserId(int userId) {
+        return tUserNoteDao.queryAllNotsByUserId(userId);
     }
 }
