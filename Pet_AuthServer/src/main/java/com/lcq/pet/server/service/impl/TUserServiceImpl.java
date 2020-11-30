@@ -116,7 +116,7 @@ public class TUserServiceImpl implements TUserService{
 //                    //4..校验新增是否成功
 //                    if (tUserDao.insertId(user) > 0) {
 //                        //5.初始化用户详情数据并且记录
-////                        userdetailDao.insertInit(user.getId());
+//                        userdetailDao.insertInit(user.getId());
 //                        tUserDao.insert(new Userlog(user.getId(), UserLogType.注册.getVal(), "新用户注册，手机号：" + dto.getPhone()));
 
                     String code = JedisUtil.getInstance().getStr(RedisKeyConfig.SMS_RCODE+dto.getU_phone());
