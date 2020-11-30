@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @program: Health_Parent
  * @description:
- * @author: Feri(邢朋辉)
+ * @author:
  * @create: 2020-11-25 16:19
  */
 public class Pass_Test {

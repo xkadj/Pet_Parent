@@ -6,11 +6,16 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
+import com.aliyuncs.http.HttpRequest;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import com.lcq.pet.common.config.RedisKeyConfig;
+import com.lcq.pet.common.third.JedisUtil;
+import com.lcq.pet.common.util.NumRandomUtil;
 import org.json.JSONObject;
 
-import javax.swing.text.html.FormSubmitEvent;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 /**
@@ -39,7 +44,7 @@ public class AliSmsUtil {
 //        request.putQueryParameter("TemplateCode", "SMS_205880654");
 //        request.putQueryParameter("TemplateParam", "{\"code\":\""+code+"\"}");
         DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou",
-                "LTAI4GHztNKmQ7PzYbeoRp7U", "FtbW3hdYQKJeMFTIEzZ83jvKAXZMPc");
+                "LTAI4GHcp2gLcRKar1Gh3HeV", "UxkqMbUel0axku2KFtb7lf1mEqCdgx");
         IAcsClient client = new DefaultAcsClient(profile);
 
         CommonRequest request = new CommonRequest();
@@ -64,5 +69,12 @@ public class AliSmsUtil {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static String code(String phone) {
+        int code= NumRandomUtil.randomNum(6);
+        JedisUtil.getInstance().addStrEx(RedisKeyConfig.SMS_RCODE+phone,code+"",1800);
+                System.out.println("短信发送："+ AliSmsUtil.sendSmsCode(phone,code));
+        return "code";
     }
 }

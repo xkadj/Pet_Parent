@@ -13,4 +13,5 @@ public class UserDto {
     private String u_phone;
     private String u_password;
     private Integer u_flag;
+    private String code;
 }
