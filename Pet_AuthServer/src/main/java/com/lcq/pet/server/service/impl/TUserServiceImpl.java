@@ -9,15 +9,21 @@ import com.lcq.pet.common.dto.UserUpdatePassDto;
 import com.lcq.pet.common.third.JedisUtil;
 import com.lcq.pet.common.util.DateUtil;
 import com.lcq.pet.common.util.EncryptUtil;
+import com.lcq.pet.common.util.NumRandomUtil;
 import com.lcq.pet.common.util.StrUtil;
 import com.lcq.pet.common.vo.R;
+import com.lcq.pet.server.util.AliSmsUtil;
 import com.lcq.pet.server.util.JwtUtil;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.lcq.pet.server.entity.TUser;
 import com.lcq.pet.server.dao.TUserDao;
 import com.lcq.pet.server.service.intf.TUserService;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @description: 码起 自动生成代码
@@ -67,7 +73,6 @@ public class TUserServiceImpl implements TUserService{
     @Override
     public R findPass(UserFindPass dto) {
         if(dto!=null &&StrUtil.checkNoEmpty(dto.getU_phone())) {
-
             dto.setU_password(EncryptUtil.aesenc(SystemConfig.PASS_KEY, dto.getU_password()));
             if (tUserDao.updatePass(dto) > 0) {
                 return R.ok("密码找回成功");
@@ -81,7 +86,6 @@ public class TUserServiceImpl implements TUserService{
     public R changePass(UserUpdatePassDto dto) {
         if(dto!=null &&StrUtil.checkNoEmpty(dto.getU_phone())   ) {
             TUser tUser = tUserDao.selectByPhone(dto.getU_phone());
-
             if (EncryptUtil.aesdec(SystemConfig.PASS_KEY, tUser.getU_password()).equals(dto.getU_password())) {
                 dto.setU_newpassword(EncryptUtil.aesenc(SystemConfig.PASS_KEY, dto.getU_newpassword()));
                 if (tUserDao.changePass(dto) > 0) {
@@ -90,6 +94,12 @@ public class TUserServiceImpl implements TUserService{
             }
         }
         return R.fail("亲，密码修改失败，请联系客服");
+    }
+
+    @Override
+    public R registerCode(String phone) {
+        AliSmsUtil.code(phone);
+        return  R.ok("code");
     }
 
     //注册
@@ -108,17 +118,25 @@ public class TUserServiceImpl implements TUserService{
 //                        //5.初始化用户详情数据并且记录
 ////                        userdetailDao.insertInit(user.getId());
 //                        tUserDao.insert(new Userlog(user.getId(), UserLogType.注册.getVal(), "新用户注册，手机号：" + dto.getPhone()));
-                    TUser user = new TUser();
-                    user.setU_phone(dto.getU_phone());
-                    user.setU_password(EncryptUtil.aesenc(SystemConfig.PASS_KEY, dto.getU_password()));
-                    if (tUserDao.insertId(user) > 0) {
-                        return R.ok("注册成功");
+
+                    String code = JedisUtil.getInstance().getStr(RedisKeyConfig.SMS_RCODE+dto.getU_phone());
+                    if (code.equals(dto.getCode())){
+                        TUser user = new TUser();
+                        user.setU_phone(dto.getU_phone());
+                        user.setU_password(EncryptUtil.aesenc(SystemConfig.PASS_KEY, dto.getU_password()));
+                        if (tUserDao.insertId(user) > 0) {
+                            return R.ok("注册成功");
+                        }
                     }
                 }
             }
         }
         return R.fail("亲，注册失败，请检查网络");
     }
+
+
+
+
 
     //登录
     @Override
@@ -169,4 +187,5 @@ public class TUserServiceImpl implements TUserService{
         }
         return R.fail("亲，修改失败，请检查网络");
     }
+
 }

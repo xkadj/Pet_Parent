@@ -71,4 +71,8 @@ public class TUserController {
         return tUserService.updateUserDetail(dto);
     }
 
+    @PostMapping("/code.do")
+    public R code(String phone){
+        return tUserService.registerCode(phone);
+    }
 }
