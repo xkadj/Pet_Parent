@@ -56,4 +56,10 @@ public interface TUserDao {
     //冻结用户：flag=0
     @Update("update t_user set u_flag = 0 where u_phone = #{phone}")
     void frizeUser(String phone);
+
+      //解冻用户：flag=1
+    @Update("update t_user set u_flag = 1 where u_phone = #{phone}")
+    void activeUser(String phone);
+
+
 }
