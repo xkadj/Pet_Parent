@@ -165,7 +165,6 @@ public class TUserServiceImpl implements TUserService{
                             //记录在线的手机号
                             JedisUtil.getInstance().addStrEx(RedisKeyConfig.AUTH_PHONE+user.getU_phone(),token,RedisKeyConfig.AUTH_TIME);
 
-                            System.out.println(JedisUtil.getInstance().getStr(RedisKeyConfig.AUTH_PHONE+user.getU_phone()));
 
                             //记录登陆成功的令牌和对应的用户信息
                             JedisUtil.getInstance().addStrEx(RedisKeyConfig.AUTH_TOKEN+token,user.getU_id()+"",RedisKeyConfig.AUTH_TIME);
