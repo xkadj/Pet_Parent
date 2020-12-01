@@ -6,7 +6,6 @@ import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
-import com.aliyuncs.http.HttpRequest;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
 import com.lcq.pet.common.config.RedisKeyConfig;
@@ -14,12 +13,10 @@ import com.lcq.pet.common.third.JedisUtil;
 import com.lcq.pet.common.util.NumRandomUtil;
 import org.json.JSONObject;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Objects;
 
 /**
- * @program: Health_Parent
+ * @program:
  * @description:
  * @author:
  * @create: 2020-11-26 15:41
@@ -71,10 +68,10 @@ public class AliSmsUtil {
         return false;
     }
 
-    public static String code(String phone) {
+    public static Integer code(String phone) {
         int code= NumRandomUtil.randomNum(6);
-        JedisUtil.getInstance().addStrEx(RedisKeyConfig.SMS_RCODE+phone,code+"",1800);
+        JedisUtil.getInstance().addStrEx(RedisKeyConfig.SMS_RCODE+phone,code+"",RedisKeyConfig.SMS_RTIME);
                 System.out.println("短信发送："+ AliSmsUtil.sendSmsCode(phone,code));
-        return "code";
+        return code;
     }
 }

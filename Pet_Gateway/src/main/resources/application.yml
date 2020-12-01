@@ -1,0 +1,31 @@
+server:
+  port: 80
+spring:
+  application:
+    name: petgateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848/
+    gateway:
+      routes:
+      - id: auth01
+        uri: lb://lcqauthserver
+        predicates:
+        - Path=/auth/**
+        filters:
+        - StripPrefix=1
+
+      - id: net01
+        uri: lb://networkserver  #lb从注册中心调用 后面跟服务名称
+        predicates:
+        - Path=/net/**      #外界访问路径
+        filters:
+        - StripPrefix=1    #去重多余的路径
+
+#      - id: user01
+#        uri: lb://userserver  #lb从注册中心调用 后面跟服务名称
+#        predicates:
+#        - Path=/user/**      #外界访问路径
+#        filters:
+#        - StripPrefix=1    #去重多余的路径

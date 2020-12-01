@@ -4,4 +4,4 @@ spring:
   profiles:
     active: dev #多环境配置
   application:
-    name: lcqauthserver  #项目名 服务名
+    name: networkserver  #项目名 服务名

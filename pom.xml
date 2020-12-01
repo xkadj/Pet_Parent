@@ -7,6 +7,8 @@
         <module>Pet_Common</module>
         <module>Pet_AuthServer</module>
         <module>Pet_NetworkService</module>
+        <module>Pet_Gateway</module>
+        <module>Pet_Config</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

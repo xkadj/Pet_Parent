@@ -3,7 +3,6 @@ package com.lcq.pet.server.controller;
 import com.lcq.pet.common.vo.R;
 import com.lcq.pet.server.entity.TUserNote;
 import com.lcq.pet.server.service.intf.TUserNoteService;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.lcq.pet.server.entity.TNote;

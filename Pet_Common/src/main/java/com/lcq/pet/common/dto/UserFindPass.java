@@ -7,4 +7,5 @@ import lombok.Data;
 public class UserFindPass {
     private String u_phone;
     private String u_password;
+    private String code;
 }

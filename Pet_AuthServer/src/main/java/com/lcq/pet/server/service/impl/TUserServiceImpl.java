@@ -9,12 +9,10 @@ import com.lcq.pet.common.dto.UserUpdatePassDto;
 import com.lcq.pet.common.third.JedisUtil;
 import com.lcq.pet.common.util.DateUtil;
 import com.lcq.pet.common.util.EncryptUtil;
-import com.lcq.pet.common.util.NumRandomUtil;
 import com.lcq.pet.common.util.StrUtil;
 import com.lcq.pet.common.vo.R;
 import com.lcq.pet.server.util.AliSmsUtil;
 import com.lcq.pet.server.util.JwtUtil;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.lcq.pet.server.entity.TUser;
@@ -22,8 +20,6 @@ import com.lcq.pet.server.dao.TUserDao;
 import com.lcq.pet.server.service.intf.TUserService;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * @description: 码起 自动生成代码
@@ -73,9 +69,13 @@ public class TUserServiceImpl implements TUserService{
     @Override
     public R findPass(UserFindPass dto) {
         if(dto!=null &&StrUtil.checkNoEmpty(dto.getU_phone())) {
-            dto.setU_password(EncryptUtil.aesenc(SystemConfig.PASS_KEY, dto.getU_password()));
-            if (tUserDao.updatePass(dto) > 0) {
-                return R.ok("密码找回成功");
+
+            String code = JedisUtil.getInstance().getStr(RedisKeyConfig.SMS_RCODE+dto.getU_phone());
+            if (code.equals(dto.getCode())) {
+                dto.setU_password(EncryptUtil.aesenc(SystemConfig.PASS_KEY, dto.getU_password()));
+                if (tUserDao.updatePass(dto) > 0) {
+                    return R.ok("密码找回成功,请重新登录");
+                }
             }
         }
         return R.fail("亲，密码找回失败，请联系客服");
@@ -84,11 +84,11 @@ public class TUserServiceImpl implements TUserService{
     //修改密码
     @Override
     public R changePass(UserUpdatePassDto dto) {
-        if(dto!=null &&StrUtil.checkNoEmpty(dto.getU_phone())   ) {
+        if(dto!=null &&StrUtil.checkNoEmpty(dto.getU_phone())) {
             TUser tUser = tUserDao.selectByPhone(dto.getU_phone());
             if (EncryptUtil.aesdec(SystemConfig.PASS_KEY, tUser.getU_password()).equals(dto.getU_password())) {
                 dto.setU_newpassword(EncryptUtil.aesenc(SystemConfig.PASS_KEY, dto.getU_newpassword()));
-                if (tUserDao.changePass(dto) > 0) {
+                if (tUserDao.changePass(dto)>0) {
                     return R.ok("密码修改成功");
                 }
             }
@@ -96,10 +96,11 @@ public class TUserServiceImpl implements TUserService{
         return R.fail("亲，密码修改失败，请联系客服");
     }
 
+    //发送短信验证码
     @Override
-    public R registerCode(String phone) {
-        AliSmsUtil.code(phone);
-        return  R.ok("code");
+    public R code(String phone) {
+        Integer c = AliSmsUtil.code(phone);
+        return  R.ok(c);
     }
 
     //注册
@@ -135,9 +136,6 @@ public class TUserServiceImpl implements TUserService{
     }
 
 
-
-
-
     //登录
     @Override
     public R loginV2(UserDto dto) {
@@ -166,6 +164,9 @@ public class TUserServiceImpl implements TUserService{
                             //存储令牌
                             //记录在线的手机号
                             JedisUtil.getInstance().addStrEx(RedisKeyConfig.AUTH_PHONE+user.getU_phone(),token,RedisKeyConfig.AUTH_TIME);
+
+                            System.out.println(JedisUtil.getInstance().getStr(RedisKeyConfig.AUTH_PHONE+user.getU_phone()));
+
                             //记录登陆成功的令牌和对应的用户信息
                             JedisUtil.getInstance().addStrEx(RedisKeyConfig.AUTH_TOKEN+token,user.getU_id()+"",RedisKeyConfig.AUTH_TIME);
                             return R.ok(token);

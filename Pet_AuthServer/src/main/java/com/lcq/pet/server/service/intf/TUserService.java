@@ -41,7 +41,7 @@ public interface TUserService {
     //修改个人信息
     R updateUserDetail(UserDetialDto dto);
 
-    //注册验证码
-    R registerCode(String phone);
+    //发送短信验证码
+    R code(String phone);
 
 }

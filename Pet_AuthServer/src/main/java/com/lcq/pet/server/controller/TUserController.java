@@ -48,19 +48,19 @@ public class TUserController {
     }
 
     //校验
-    @GetMapping("/checkphone.do")
+    @GetMapping("/checkPhone.do")
     public R check(String phone){
         return tUserService.checkPhone(phone);
     }
 
-    //密码找回
-    @PostMapping("/findpass.do")
+    //找回密码
+    @PostMapping("/findPass.do")
     public R finaPass(@RequestBody UserFindPass dto){
         return tUserService.findPass(dto);
     }
 
     //修改密码
-    @PostMapping("/changepass.do")
+    @PostMapping("/changePass.do")
     public R changePass(@RequestBody UserUpdatePassDto dto){
         return tUserService.changePass(dto);
     }
@@ -71,8 +71,9 @@ public class TUserController {
         return tUserService.updateUserDetail(dto);
     }
 
+    //发送短信验证码
     @PostMapping("/code.do")
     public R code(String phone){
-        return tUserService.registerCode(phone);
+        return tUserService.code(phone);
     }
 }

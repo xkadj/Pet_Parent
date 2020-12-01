@@ -2,7 +2,6 @@ package com.lcq.pet.common.third;
 
 import redis.clients.jedis.Jedis;
 
-import java.util.concurrent.TimeUnit;
 
 /**
  * @program: Health_Parent

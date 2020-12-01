@@ -10,4 +10,7 @@ public class SystemConfig {
     //密码的密钥
     public static final String PASS_KEY="VSgsfX+NAN3kpQFvrpkXNw==";
 
+    //令牌穿透的请求消息头
+    public static final String TOKEN_HEA="health-token";
+
 }
