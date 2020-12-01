@@ -71,10 +71,10 @@ public class AliSmsUtil {
         return false;
     }
 
-    public static String code(String phone) {
+    public static int code(String phone) {
         int code= NumRandomUtil.randomNum(6);
         JedisUtil.getInstance().addStrEx(RedisKeyConfig.SMS_RCODE+phone,code+"",1800);
                 System.out.println("短信发送："+ AliSmsUtil.sendSmsCode(phone,code));
-        return "code";
+        return code;
     }
 }

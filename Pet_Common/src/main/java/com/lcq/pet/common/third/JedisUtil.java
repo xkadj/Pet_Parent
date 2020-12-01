@@ -14,8 +14,8 @@ public class JedisUtil {
     private Jedis jedis;
     private static JedisUtil util=new JedisUtil();
     private JedisUtil(){
-        jedis=new Jedis("39.105.189.141",6380);
-        jedis.auth("qfjava");
+        jedis=new Jedis("192.168.164.129",6379);
+        jedis.auth("root");
     }
     public static JedisUtil getInstance(){
         return util;
@@ -49,5 +49,22 @@ public class JedisUtil {
     public boolean delKeys(String... keys){
         return jedis.del(keys)>0;
     }
+
+    //添加一个list集合
+    public void addList(String key,String...strs){
+         jedis.lpush(key,strs);
+    }
+
+    //设置一个key的存活时间
+    public void setKeyTime(String key, int second){
+         jedis.expire(key,second);
+    }
+
+    public long getSize(String key){
+        return jedis.llen(key);
+    }
+
+
+
 
 }
