@@ -19,4 +19,8 @@ public class RedisKeyConfig {
     public static final String SMS_RCODE="health:sms:register:";//后面追加手机号
     public static final int SMS_RTIME=600;//有效期
 
+    //记录密码输入错误的list在再redis里
+    public static final String LOGIN_FALSE="health:login:phone:";//后面追加手机号
+
+
 }

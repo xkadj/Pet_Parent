@@ -52,4 +52,8 @@ public interface TUserDao {
     //修改个人信息
     @Update("update t_user set u_name=#{u_name}, u_sex=#{u_sex}, u_email=#{u_email}, u_img=#{u_img},u_addr=#{u_addr},u_sign=#{u_sign}  where u_phone=#{u_phone}")
     int updateDetail(UserDetialDto dto);
+
+    //冻结用户：flag=0
+    @Update("update t_user set u_flag = 0 where u_phone = #{phone}")
+    void frizeUser(String phone);
 }
