@@ -142,13 +142,16 @@ public class TUserServiceImpl implements TUserService{
     @Override
     public R loginV2(UserDto dto) {
 
-        String loginFalseKey = RedisKeyConfig.LOGIN_FALSE+dto.getU_phone()+dto.getU_phone();
+        String loginFalseKey = RedisKeyConfig.LOGIN_FALSE+dto.getU_phone();
         //1.校验参数
         if(dto!=null){
             if(StrUtil.checkNoEmpty(dto.getU_phone(),dto.getU_password())){
                 //唯一登陆 生成令牌 存储令牌
                 TUser user=tUserDao.selectByPhone(dto.getU_phone());
                 if(user!=null){
+                    if (!JedisUtil.getInstance().ishave(loginFalseKey)){
+                        tUserDao.activeUser(dto.getU_phone());
+                    }
                     //校验账号是否有效
                     if(user.getU_flag()==1){
                         //校验密码
@@ -171,20 +174,20 @@ public class TUserServiceImpl implements TUserService{
                             //记录登陆成功的令牌和对应的用户信息
                             JedisUtil.getInstance().addStrEx(RedisKeyConfig.AUTH_TOKEN+token,user.getU_id()+"",RedisKeyConfig.AUTH_TIME);
                             return R.ok(token);
+                        }else{//密码输入错误,若十分中内输错三次，则冻结一个小时（flag=0）
+                            if ( !JedisUtil.getInstance().ishave(loginFalseKey)){//第一次输入错误
+                                JedisUtil.getInstance().addList(loginFalseKey,"1");
+                                JedisUtil.getInstance().setKeyTime(loginFalseKey,120);
+                            }else{//存在，说明已经输错过,直接在集合中加入
+                                JedisUtil.getInstance().addList(loginFalseKey,"1");
+                                if (JedisUtil.getInstance().getSize(loginFalseKey) >= 3){//查看集合中数量，即输入错的次数，若大于等于三，冻结用户
+                                    //冻结用户
+                                    tUserDao.frizeUser(dto.getU_phone());
+                                }
+                            }
                         }
                     }else {
                         return R.fail("账号已被冻结");
-                    }
-                }else{//密码输入错误,若十分中内输错三次，则冻结一个小时（flag=0）
-                    if ( !JedisUtil.getInstance().ishave(loginFalseKey)){//第一次输入错误
-                        JedisUtil.getInstance().addList(loginFalseKey,"1");
-                        JedisUtil.getInstance().setKeyTime(loginFalseKey,120);
-                    }else{//存在，说明已经输错过,直接在集合中加入
-                        JedisUtil.getInstance().addList(loginFalseKey,"1");
-                        if (JedisUtil.getInstance().getSize(loginFalseKey) >= 3){//查看集合中数量，即输入错的次数，若大于等于三，冻结用户
-                            //冻结用户
-                            tUserDao.frizeUser(dto.getU_phone());
-                        }
                     }
                 }
             }
