@@ -24,11 +24,7 @@ public class TUserNoteController {
     public R save(@RequestBody TUserNote tUserNote){
         return tUserNoteService.save(tUserNote);
     }
-    //删除
-    @DeleteMapping("/del.do")
-    public R del(int id){
-        return tUserNoteService.delById(id);
-    }
+
     //查询
     @GetMapping("/all.do")
     public R all(){

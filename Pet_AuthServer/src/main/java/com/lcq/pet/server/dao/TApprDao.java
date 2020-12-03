@@ -31,4 +31,12 @@ public interface TApprDao {
     //根据用户id查询点赞的总数量
     @Select("select count(*) from t_appr where u_id_from = #{userId}")
     int getApprNumByUserId(int userId);
+
+    //根据指定点笔记id获取该条笔记的点赞人的id
+    @Select("select u_id_from from t_appr where n_id = #{noteId}")
+    List<Integer> getAllUserIdByApprId(int noteId);
+
+    //根据指定点笔记id获取该条笔记的点赞人的id
+    @Delete("delete from t_appr where n_id = #{noteId} and u_id_from = #{userId}")
+    void deleteNoteByUserIdAndApprId(int userId, int noteId);
 }

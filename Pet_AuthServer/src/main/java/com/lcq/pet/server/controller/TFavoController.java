@@ -52,4 +52,15 @@ public class TFavoController {
         }
         return null;
     }
+
+    //删除该用户的某个收藏
+    @GetMapping("/deleteNoteByNoteId.do")
+    public R deleteNoteByNoteId(int userId, int noteId){
+       if (tFavoService.deleteNoteByNoteId(userId,noteId) == 1){
+           return R.ok("删除成功");
+       }
+        return R.fail("删除失败");
+    }
+
+
 }

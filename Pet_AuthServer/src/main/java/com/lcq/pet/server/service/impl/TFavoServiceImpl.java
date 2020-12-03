@@ -18,6 +18,7 @@ import java.util.List;
 @Service
 public class TFavoServiceImpl implements TFavoService{
 
+
     @Autowired
     private TFavoDao tFavoDao;
 
@@ -50,5 +51,11 @@ public class TFavoServiceImpl implements TFavoService{
     @Override
     public List<TNote> queryAllFavoByUserId(int userId) {
         return tFavoDao.queryAllFavoByUserId(userId);
+    }
+
+    //删除该用户的某个收藏
+    @Override
+    public int deleteNoteByNoteId(int userId, int noteId) {
+      return  tFavoDao.deleteNoteByNoteId(userId,noteId);
     }
 }

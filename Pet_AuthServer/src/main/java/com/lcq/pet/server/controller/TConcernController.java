@@ -1,6 +1,7 @@
 package com.lcq.pet.server.controller;
 
 import com.lcq.pet.common.vo.R;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.lcq.pet.server.entity.TConcern;
@@ -30,6 +31,8 @@ public class TConcernController {
     public R all(){
         return tConcernService.all();
     }
+
+
 
 
     @PostMapping("/concern.do")

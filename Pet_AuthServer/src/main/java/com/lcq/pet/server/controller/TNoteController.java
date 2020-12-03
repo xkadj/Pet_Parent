@@ -1,6 +1,9 @@
 package com.lcq.pet.server.controller;
 
 import com.lcq.pet.common.vo.R;
+import com.lcq.pet.server.dao.TConcernDao;
+import com.lcq.pet.server.dao.TNoteDao;
+import com.lcq.pet.server.entity.TConcernUsers;
 import com.lcq.pet.server.entity.TUserNote;
 import com.lcq.pet.server.service.intf.TUserNoteService;
 import org.checkerframework.checker.units.qual.A;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.lcq.pet.server.entity.TNote;
 import com.lcq.pet.server.service.intf.TNoteService;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -21,6 +25,12 @@ import java.util.List;
 public class TNoteController {
     @Autowired
     private TNoteService tNoteService;
+
+    @Autowired
+    private TNoteDao tNoteDao;
+
+    @Autowired
+    private TConcernDao tConcernDao;
 
     @Autowired
     private TUserNoteService userNoteService;
@@ -58,4 +68,16 @@ public class TNoteController {
     public List<TNote> queryAllNotes(){
         return tNoteService.queryAllNotes();
     }
+
+    @GetMapping("/queryConcernUserNotesByUserId.do")
+    public List<TNote> queryConcernUserNotesByUserId(int userId){
+        return tNoteService.queryConcernUserNotesByUserId(userId);
+    }
+
+    //删除该用户的指定笔记
+    @GetMapping("/deleteNoteByUserIdAndNoteId.do")
+    public R deleteNoteByUserIdAndNoteId(int userId, int noteId){
+        return tNoteService.deleteNoteByUserIdAndNoteId(userId,noteId);
+    }
+
 }

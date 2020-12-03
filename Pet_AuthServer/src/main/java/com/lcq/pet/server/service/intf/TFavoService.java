@@ -3,6 +3,7 @@ package com.lcq.pet.server.service.intf;
 import com.lcq.pet.common.vo.R;
 import com.lcq.pet.server.entity.TFavo;
 import com.lcq.pet.server.entity.TNote;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -25,4 +26,7 @@ public interface TFavoService {
 
     //根据用户id查询该用户收藏列表
     List<TNote> queryAllFavoByUserId(int userId);
+
+    //删除该用户的某个收藏
+    int deleteNoteByNoteId(int userId, int noteId);
 }

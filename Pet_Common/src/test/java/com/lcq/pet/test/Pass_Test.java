@@ -2,6 +2,7 @@ package com.lcq.pet.test;
 
 import com.lcq.pet.common.util.EncryptUtil;
 import org.junit.jupiter.api.Test;
+import java.util.HashSet;
 
 /**
  * @program: Health_Parent
@@ -12,12 +13,6 @@ import org.junit.jupiter.api.Test;
 public class Pass_Test {
     @Test
     public void t1(){
-        //生成密钥
-        String key= EncryptUtil.createAESKey();
-        System.out.println(key);
-        String p1="123456";
-        String m=EncryptUtil.aesenc(key,p1);
-        System.out.println(m);
-        System.out.println("解密："+EncryptUtil.aesdec(key,m));
+
     }
 }

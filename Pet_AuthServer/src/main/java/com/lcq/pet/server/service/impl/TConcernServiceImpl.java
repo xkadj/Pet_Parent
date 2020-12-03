@@ -41,7 +41,26 @@ public class TConcernServiceImpl implements TConcernService{
 
     @Override
     public R concern(TConcern concern) {
-        return tConcernDao.insert(concern) > 0 ? R.ok() : R.fail("关注失败！");
+        //查询该用户是否已经关注了该用户
+        TConcern concern1 = tConcernDao.isConcern(concern.getU_id_from(), concern.getU_id_to());
+
+        if (concern1 == null ){//没有关注，则直接添加关注，先判断对方是否已经关注了自己
+            if (tConcernDao.isConcern( concern.getU_id_to(),concern.getU_id_from()) != null ){//对方已经关注了自己，则直接把那条记录标记改为双向关注
+               return tConcernDao.makeConcernBoth(concern.getU_id_to(),concern.getU_id_from()) == 1 ?  R.ok("关注成功！") : R.fail("关注失败！");
+            }
+            return tConcernDao.insert(concern) > 0 ? R.ok("关注成功！") : R.fail("关注失败！");
+        }else {//已经关注了，则查询是否是双向关注
+            if ( concern1.getC_flag() == 1){//双向关注，改变该条记录，变成反过来的单向关注
+                if (tConcernDao.makeConcernRevers(concern.getU_id_from(),concern.getU_id_to()) == 1){
+                    return R.ok("取关成功！");
+                }
+            }else {//单向关注，直接删除该条记录
+                tConcernDao.deleteById(concern.getU_id_from());
+                return R.ok("取关成功！");
+            }
+
+        }
+        return  null;
     }
 
     @Override

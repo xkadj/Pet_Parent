@@ -2,8 +2,10 @@ package com.lcq.pet.server.service.intf;
 
 import com.lcq.pet.common.vo.R;
 import com.lcq.pet.server.entity.TNote;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -25,6 +27,10 @@ public interface TNoteService {
     //查询所有笔记
     List<TNote> queryAllNotes();
 
+    //查询用户关注的用户的笔记
+    List<TNote> queryConcernUserNotesByUserId(int userId);
 
+    //删除该用户的指定笔记
+    R deleteNoteByUserIdAndNoteId(int userId, int noteId);
 
 }

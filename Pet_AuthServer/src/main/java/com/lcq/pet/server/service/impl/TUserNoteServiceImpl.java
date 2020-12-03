@@ -29,14 +29,7 @@ public class TUserNoteServiceImpl implements TUserNoteService{
             return R.fail("新增失败");
         }
     }
-    @Override
-    public R delById(int id){
-        if(tUserNoteDao.deleteById(id)>0){
-            return R.ok();
-        }else{
-            return R.fail("删除失败");
-        }
-    }
+
     @Override
     public R all(){
        return R.ok(tUserNoteDao.all());

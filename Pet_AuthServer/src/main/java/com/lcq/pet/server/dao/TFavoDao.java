@@ -37,5 +37,7 @@ public interface TFavoDao {
     @Select("select n.* from t_favo f,t_note n where f.f_noteid = n.n_id and f.f_userid = #{userId} ")
     List<TNote> queryAllFavoByUserId(int userId);
 
-
+    //删除该用户的某个收藏
+    @Delete("delete from t_favo where f_userid = #{userId} and f_noteid = #{noteId}")
+    int deleteNoteByNoteId(int userId, int noteId);
 }

@@ -23,4 +23,9 @@ public class RedisKeyConfig {
     public static final String LOGIN_FALSE="health:loginflase:phone:";//后面追加手机号
 
 
+    //动态点赞相关  Set
+    public static final String NOTE_APPR="health:mood:like:";//后面动态id
+    public static final int APPR_TIME=24*3600;//有效期
+
+
 }

@@ -19,4 +19,7 @@ public interface TApprService {
 
     //根据用户id查询点赞的总数量
     int getApprNumByUserId(int userId);
+
+    //点赞
+    R makeAppr(String token,int apprId);
 }

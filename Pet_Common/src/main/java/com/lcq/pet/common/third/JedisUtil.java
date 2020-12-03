@@ -64,6 +64,23 @@ public class JedisUtil {
         return jedis.llen(key);
     }
 
+    public boolean checkSet(String key,String val){
+        return jedis.sismember(key, val);
+    }
+
+    //删除
+    public void delSet(String key,String val){
+        jedis.srem(key,val);
+    }
+
+    public void addSet(String key,String... values){
+        jedis.sadd(key, values);
+    }
+
+    public void setTime(String key,int seconds){
+        jedis.expire(key,seconds);
+    }
+
 
 
 

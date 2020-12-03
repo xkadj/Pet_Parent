@@ -14,8 +14,7 @@ import java.util.List;
 public interface TUserNoteService {
     /*新增*/
     R save(TUserNote tUserNote);
-    /*删除*/
-    R delById(int id);
+
     /*查询全部*/
     R all();
 
