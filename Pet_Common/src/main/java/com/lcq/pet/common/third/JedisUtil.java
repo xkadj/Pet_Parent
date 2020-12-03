@@ -12,76 +12,84 @@ import java.util.concurrent.TimeUnit;
  */
 public class JedisUtil {
     private Jedis jedis;
-    private static JedisUtil util=new JedisUtil();
-    private JedisUtil(){
-        jedis=new Jedis("192.168.164.129",6379);
+    private static JedisUtil util = new JedisUtil();
+
+    private JedisUtil() {
+        jedis = new Jedis("192.168.164.129", 6379);
         jedis.auth("root");
     }
-    public static JedisUtil getInstance(){
+
+    public static JedisUtil getInstance() {
         return util;
     }
+
     //新增
-    public void addStr(String key,String val){
+    public void addStr(String key, String val) {
         jedis.set(key, val);
     }
-    public void addStrEx(String key, String val, int seconds){
-        jedis.setex(key,seconds,val);
+
+    public void addStrEx(String key, String val, int seconds) {
+        jedis.setex(key, seconds, val);
     }
-    public void addHash(String key,String field,String value){
+
+    public void addHash(String key, String field, String value) {
         jedis.hset(key, field, value);
     }
+
     //删除
     //修改
     //查询
-    public String getStr(String key){
+    public String getStr(String key) {
         return jedis.get(key);
     }
-    public String getHash(String key,String field){
+
+    public String getHash(String key, String field) {
         return jedis.hget(key, field);
     }
-    public boolean checkHash(String key,String field){
+
+    public boolean checkHash(String key, String field) {
         return jedis.hexists(key, field);
     }
+
     //系统
-    public boolean ishave(String key){
+    public boolean ishave(String key) {
         return jedis.exists(key);
     }
-    public boolean delKeys(String... keys){
-        return jedis.del(keys)>0;
+
+    public boolean delKeys(String... keys) {
+        return jedis.del(keys) > 0;
     }
 
     //添加一个list集合
-    public void addList(String key,String...strs){
-         jedis.lpush(key,strs);
+    public void addList(String key, String... strs) {
+        jedis.lpush(key, strs);
     }
 
     //设置一个key的存活时间
-    public void setKeyTime(String key, int second){
-         jedis.expire(key,second);
+    public void setKeyTime(String key, int second) {
+        jedis.expire(key, second);
     }
 
-    public long getSize(String key){
+    public long getSize(String key) {
         return jedis.llen(key);
     }
 
-    public boolean checkSet(String key,String val){
+    public boolean checkSet(String key, String val) {
         return jedis.sismember(key, val);
     }
 
     //删除
-    public void delSet(String key,String val){
-        jedis.srem(key,val);
+    public void delSet(String key, String val) {
+        jedis.srem(key, val);
     }
 
-    public void addSet(String key,String... values){
+    public void addSet(String key, String... values) {
         jedis.sadd(key, values);
     }
 
-    public void setTime(String key,int seconds){
-        jedis.expire(key,seconds);
+    public void setTime(String key, int seconds) {
+        jedis.expire(key, seconds);
     }
-
-
 
 
 }

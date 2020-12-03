@@ -42,7 +42,7 @@ public interface TConcernDao {
     int makeConcernBoth(int uIdFrom, int uIdTo);
 
     //查询用户关注的所有用户id，返回一个对象集合
-    @Select("select c1.u_id_from,c2.u_id_to from t_concern c1,t_concern c2 where (c1.u_id_to = #{userId} and c1.c_flag = 1) and c2.u_id_from = #{userId}")
+    @Select("select u_id_from,u_id_to from t_concern where (u_id_to = #{userId} and c_flag = 1) or u_id_from = #{userId};")
     List<TConcernUsers> queryAllUserIdByUserId(int userId);
 
 }

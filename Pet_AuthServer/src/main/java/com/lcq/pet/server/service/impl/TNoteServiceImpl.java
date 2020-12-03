@@ -21,7 +21,7 @@ import java.util.List;
  * @create: 2020-11-26 19:20:19
  */
 @Service
-public class TNoteServiceImpl implements TNoteService{
+public class TNoteServiceImpl implements TNoteService {
 
     @Autowired
     private TNoteDao tNoteDao;
@@ -33,24 +33,26 @@ public class TNoteServiceImpl implements TNoteService{
     private TConcernDao tConcernDao;
 
     @Override
-    public R save(TNote tNote){
-        if(tNoteDao.insert(tNote)>0){
+    public R save(TNote tNote) {
+        if (tNoteDao.insert(tNote) > 0) {
             return R.ok();
-        }else{
+        } else {
             return R.fail("新增失败");
         }
     }
+
     @Override
-    public R delById(int id){
-        if(tNoteDao.deleteById(id)>0){
+    public R delById(int id) {
+        if (tNoteDao.deleteById(id) > 0) {
             return R.ok();
-        }else{
+        } else {
             return R.fail("删除失败");
         }
     }
+
     @Override
-    public R all(){
-       return R.ok(tNoteDao.all());
+    public R all() {
+        return R.ok(tNoteDao.all());
     }
 
     @Override
@@ -66,22 +68,25 @@ public class TNoteServiceImpl implements TNoteService{
     //查询用户关注的用户的笔记
     @Override
     public List<TNote> queryConcernUserNotesByUserId(int userId) {
+        //先查询该用户关注的人
         List<TConcernUsers> tConcernUsers = tConcernDao.queryAllUserIdByUserId(userId);
         HashSet<Integer> hashSet = new HashSet<>();
         StringBuilder stringBuilder = new StringBuilder();
 
-        for (TConcernUsers concernUsers:tConcernUsers ) {
+        for (TConcernUsers concernUsers : tConcernUsers) {
             hashSet.add(concernUsers.getU_id_from());
             hashSet.add(concernUsers.getU_id_to());
         }
-        stringBuilder.append("(");
-        for (Integer id:hashSet) {
-            stringBuilder.append(id+",");
+        if (hashSet.size() == 0) {//若没有获取到任何人的id，说明该用户没有关注任何人，则直接返回空
+            return null;
         }
-        stringBuilder.deleteCharAt(stringBuilder.length()-1);
+        stringBuilder.append("(");
+        for (Integer id : hashSet) {
+            stringBuilder.append(id + ",");
+        }
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         stringBuilder.append(")");
         return tNoteDao.queryConcernUserNotesByUserId(stringBuilder.toString());
-
     }
 
     //删除该用户的指定笔记
@@ -90,7 +95,7 @@ public class TNoteServiceImpl implements TNoteService{
         //先删除笔记
         tNoteDao.deleteById(noteId);
         //在删除用户笔记关联
-        tUserNoteDao.deleteById(userId,noteId);
+        tUserNoteDao.deleteById(userId, noteId);
         return R.ok("删除成功");
     }
 
