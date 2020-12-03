@@ -22,7 +22,7 @@ public interface TConcernDao {
     int insert(TConcern tConcern);
 
     /*删除*/
-    @Delete("delete from t_concern where id=#{id}")
+    @Delete("delete from t_concern where u_id_to=#{id}")
     int deleteById(int id);
     /*查询全部*/
     @Select("select * from t_concern")

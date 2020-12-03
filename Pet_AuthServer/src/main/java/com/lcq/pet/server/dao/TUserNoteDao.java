@@ -23,7 +23,7 @@ public interface TUserNoteDao {
     int insert(TUserNote tUserNote);
 
     /*删除*/
-    @Delete("delete from t_user_note where id=#{id}")
+    @Delete("delete from t_user_note where n_id=#{id}")
     int deleteById(int id);
     /*查询全部*/
     @Select("select * from t_user_note")

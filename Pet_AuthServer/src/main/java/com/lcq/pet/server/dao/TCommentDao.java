@@ -20,7 +20,7 @@ public interface TCommentDao {
     int insert(TComment tComment);
 
     /*删除*/
-    @Delete("delete from t_comment where id=#{id}")
+    @Delete("delete from t_comment where c_id=#{id}")
     int deleteById(int id);
     /*查询全部*/
     @Select("select * from t_comment")

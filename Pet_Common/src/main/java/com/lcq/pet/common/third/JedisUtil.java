@@ -13,8 +13,8 @@ public class JedisUtil {
     private Jedis jedis;
     private static JedisUtil util=new JedisUtil();
     private JedisUtil(){
-        jedis=new Jedis("192.168.164.129",6379);
-        jedis.auth("root");
+        jedis=new Jedis("39.105.189.141",6380);
+        jedis.auth("qfjava");
     }
     public static JedisUtil getInstance(){
         return util;

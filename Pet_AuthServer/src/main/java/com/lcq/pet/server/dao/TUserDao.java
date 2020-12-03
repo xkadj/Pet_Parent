@@ -31,6 +31,9 @@ public interface TUserDao {
     @Select("select * from t_user")
     List<TUser> all();
 
+    @Select("select * from t_user where u_phone=#{phone}")
+    TUser userdetail(String phone);
+
 
     //检验手机号
     @Select("select * from t_user where u_phone=#{phone}")

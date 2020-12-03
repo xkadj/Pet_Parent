@@ -37,6 +37,7 @@ public class TFavoServiceImpl implements TFavoService{
             return R.fail("删除失败");
         }
     }
+
     @Override
     public R all(){
        return R.ok(tFavoDao.all());

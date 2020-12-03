@@ -5,6 +5,7 @@ import com.lcq.pet.common.dto.UserDto;
 import com.lcq.pet.common.dto.UserFindPass;
 import com.lcq.pet.common.dto.UserUpdatePassDto;
 import com.lcq.pet.common.vo.R;
+import com.lcq.pet.server.entity.TUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.lcq.pet.server.service.intf.TUserService;
@@ -16,8 +17,10 @@ import com.lcq.pet.server.service.intf.TUserService;
 @RestController
 @RequestMapping("/api/tUser")
 public class TUserController {
+
     @Autowired
     private TUserService tUserService;
+
     //新增
 //    @PostMapping("/add.do")
 //    public R save(@RequestBody TUser tUser){
@@ -29,11 +32,16 @@ public class TUserController {
         return tUserService.delById(id);
     }
 
-//    //查询
-//    @GetMapping("/all.do")
-//    public R all(){
-//        return tUserService.all();
-//    }
+    //查询
+    @GetMapping("/all.do")
+    public R all(){
+        return tUserService.all();
+    }
+
+    @GetMapping("/userdetail.do")
+    public TUser userdetail(String phone){
+        return tUserService.userdetail(phone);
+    }
 
     //注册
     @PostMapping("/register.do")

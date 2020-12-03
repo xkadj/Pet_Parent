@@ -19,7 +19,7 @@ public interface TNoteDao {
     int insert(TNote tNote);
 
     /*删除*/
-    @Delete("delete from t_note where id=#{id}")
+    @Delete("delete from t_note where n_id=#{id}")
     int deleteById(int id);
     /*查询全部*/
     @Select("select * from t_note")

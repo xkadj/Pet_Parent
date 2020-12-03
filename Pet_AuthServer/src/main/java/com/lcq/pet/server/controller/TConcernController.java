@@ -31,7 +31,7 @@ public class TConcernController {
         return tConcernService.all();
     }
 
-
+    //关注
     @PostMapping("/concern.do")
     public R concern(TConcern concern){
         if (concern != null){

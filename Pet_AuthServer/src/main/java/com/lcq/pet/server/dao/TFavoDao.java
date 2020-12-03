@@ -23,7 +23,7 @@ public interface TFavoDao {
     int insert(TFavo tFavo);
 
     /*删除*/
-    @Delete("delete from t_favo where id=#{id}")
+    @Delete("delete from t_favo where f_noteid=#{id}")
     int deleteById(int id);
     /*查询全部*/
     @Select("select * from t_favo")

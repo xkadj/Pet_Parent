@@ -38,14 +38,14 @@ public interface TUserService {
     //登陆
     R loginV2(UserDto dto);
 
+    //查询个人信息
+    TUser userdetail(String phone);
+
     //修改个人信息
     R updateUserDetail(UserDetialDto dto);
 
     //发送短信验证码
     R code(String phone);
-
-
-
 
 
 }

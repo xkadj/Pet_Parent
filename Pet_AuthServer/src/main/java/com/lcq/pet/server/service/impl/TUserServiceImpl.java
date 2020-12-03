@@ -32,6 +32,7 @@ public class TUserServiceImpl implements TUserService{
     @Autowired
     private TUserDao tUserDao;
 
+
     @Override
     public R save(TUser tUser){
         if(tUserDao.insert(tUser)>0){
@@ -43,7 +44,7 @@ public class TUserServiceImpl implements TUserService{
     @Override
     public R delById(int id){
         if(tUserDao.deleteById(id)>0){
-            return R.ok();
+            return R.ok("删除成功");
         }else{
             return R.fail("删除失败");
         }
@@ -59,11 +60,12 @@ public class TUserServiceImpl implements TUserService{
         if(StrUtil.checkNoEmpty(phone)) {
             TUser user = tUserDao.selectByPhone(phone);
             if (user == null) {
-                return R.ok();
+                return R.ok("手机号可用");
             }
         }
         return R.fail("亲，该手机号已被注册，可以找回密码！");
     }
+
 
     //找回密码
     @Override
@@ -112,6 +114,7 @@ public class TUserServiceImpl implements TUserService{
             if(StrUtil.checkNoEmpty(dto.getU_phone(),dto.getU_password())){
                 //2.校验手机号时候可用
                 if(tUserDao.selectByPhone(dto.getU_phone())==null) {
+
 //                    //3.密码转换为密文同时构建用户对象
 //                    TUser user = new TUser(dto.getU_phone(), EncryptUtil.aesenc(SystemConfig.PASS_KEY, dto.getU_password()));
 //                    //4..校验新增是否成功
@@ -165,7 +168,6 @@ public class TUserServiceImpl implements TUserService{
                             //记录在线的手机号
                             JedisUtil.getInstance().addStrEx(RedisKeyConfig.AUTH_PHONE+user.getU_phone(),token,RedisKeyConfig.AUTH_TIME);
 
-
                             //记录登陆成功的令牌和对应的用户信息
                             JedisUtil.getInstance().addStrEx(RedisKeyConfig.AUTH_TOKEN+token,user.getU_id()+"",RedisKeyConfig.AUTH_TIME);
                             return R.ok(token);
@@ -175,6 +177,12 @@ public class TUserServiceImpl implements TUserService{
             }
         }
         return R.fail("亲，账号或密码不正确");
+    }
+
+    //查询个人信息
+    @Override
+    public TUser userdetail(String phone) {
+        return tUserDao.userdetail(phone);
     }
 
     //修改个人信息
@@ -187,5 +195,4 @@ public class TUserServiceImpl implements TUserService{
         }
         return R.fail("亲，修改失败，请检查网络");
     }
-
 }
